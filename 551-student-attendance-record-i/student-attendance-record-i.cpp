@@ -7,16 +7,16 @@ public:
             if (s[i] == 'A') {
                 A++;
                 if (A >= 2) {
-                    return false; // More than 1 absence
+                    return false;
                 }
-                L = 0; // Reset L because it's not 'L'
+                L = 0; 
             } else if (s[i] == 'L') {
                 L++;
                 if (L >= 3) {
-                    return false; // 3 or more consecutive late days
+                    return false;
                 }
             } else {
-                L = 0; // Reset streak if not 'L'
+                L = 0;
             }
         }
         return true; 

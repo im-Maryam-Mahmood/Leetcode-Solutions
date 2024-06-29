@@ -1,33 +1,25 @@
 class Solution {
 public:
     vector<vector<int>> getAncestors(int n, vector<vector<int>>& edges) {
-         vector<vector<int>> graph(n), answer(n);
-        vector<int> in_degree(n, 0);
-        vector<set<int>> ancestors(n);
-        for (const auto& edge : edges) {
-            graph[edge[0]].push_back(edge[1]);
-            in_degree[edge[1]]++;
+         vector<vector<int>> adj(n), ans(n);
+
+        for (auto& edge: edges) {
+            adj[edge[0]].push_back(edge[1]);
         }
-        queue<int> q;
-        for (int i = 0; i < n; ++i) {
-            if (in_degree[i] == 0) {
-                q.push(i);
+
+        for (int i = 0; i < n; i++) {
+            dfs(adj,ans,i,i);
+        }
+        
+        return ans;
+    }
+    void dfs(vector<vector<int>>& adj, vector<vector<int>>& ans, int& parent, int& child) {
+        for (auto& ch: adj[child]) {
+            if (ans[ch].size() == 0 || ans[ch].back() != parent) {
+                ans[ch].push_back(parent);
+                dfs(adj,ans,parent,ch);
             }
+            
         }
-        while (!q.empty()) {
-            int node = q.front();
-            q.pop();
-            for (int neighbor : graph[node]) {
-                ancestors[neighbor].insert(node);
-                ancestors[neighbor].insert(ancestors[node].begin(), ancestors[node].end());
-                if (--in_degree[neighbor] == 0) {
-                    q.push(neighbor);
-                }
-            }
-        }
-        for (int i = 0; i < n; ++i) {
-            answer[i] = vector<int>(ancestors[i].begin(), ancestors[i].end());
-        }
-        return answer;
     }
 };

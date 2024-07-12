@@ -7,10 +7,10 @@ public:
         for (int i = 0; i < n; i++) {
             if (ans.empty()) ans.push_back(intervals[i]);
             else {
-                vector<int>& lastInterval = ans.back();
-                if (intervals[i][0] <= lastInterval[1]) {
-                    lastInterval[1] = max(lastInterval[1], intervals[i][1]);
-                } else ans.push_back(intervals[i]);
+                vector<int>& v = ans.back();
+                int y = v[1];
+                if (intervals[i][0] <= y) v[1] = max(y, intervals[i][1]);
+                else ans.push_back(intervals[i]);
             }
         }
         return ans;

@@ -11,7 +11,7 @@
 class Solution {
 public:
     vector<ListNode*> splitListToParts(ListNode* head, int k) {
-        int totalNodes = 0;
+         int totalNodes = 0;
         ListNode* current = head;
         while (current) {
             totalNodes++;
@@ -19,8 +19,10 @@ public:
         }
         int partSize = totalNodes / k;
         int extraNodes = totalNodes % k;
+
         vector<ListNode*> result(k, nullptr);
         current = head;
+
         for (int i = 0; i < k && current; ++i) {
             result[i] = current;
             int currentPartSize = partSize + (i < extraNodes ? 1 : 0);
@@ -31,6 +33,7 @@ public:
             current->next = nullptr;
             current = nextPart;
         }
+
         return result;
     }
 };

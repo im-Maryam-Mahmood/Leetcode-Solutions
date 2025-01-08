@@ -1,20 +1,23 @@
 class Solution {
 public:
     bool isValid(string s) {
-        stack<char> S;
-         for( char c : s){
-             if (c =='{' || c == '(' || c == '['){
-                S.push(c);
-             }else {
-                if(S.empty()
-                ||( c == ')' && S.top() !='(' )
-                ||( c == '}' && S.top() !='{' )
-                ||( c == ']' && S.top() !='[' )){
-                return false;
-            }
-            S.pop();     
+        std::stack<char> stk;
+        std::unordered_map<char, char> matchingBrackets = {
+            {')', '('},
+            {'}', '{'},
+            {']', '['}
+        };
+        
+        for (char ch : s) {
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stk.push(ch);  
+            } else {
+                
+                if (stk.empty() || stk.top() != matchingBrackets[ch]) 
+                    return false;  
+                stk.pop();  
             }
         }
-        return S.empty();
+        return stk.empty();
     }
 };
